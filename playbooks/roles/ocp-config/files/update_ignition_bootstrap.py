@@ -16,7 +16,7 @@ files.append(
         'source': 'data:text/plain;charset=utf-8;base64,' + dhcp_client_conf_b64,
         'verification': {}
         },
-    'filesystem': 'root',
+    'filesystem': 'root'
 })
 
 dhclient_cont_b64 = base64.standard_b64encode(b'send dhcp-client-identifier = hardware;\nprepend domain-name-servers 127.0.0.1;\n').decode().strip()
