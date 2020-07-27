@@ -42,7 +42,7 @@ if os.path.isfile('/tmp/chrony.conf.tmp'):
             },
             'mode': 420,
             'contents': {
-                'source': 'data:text/plain;charset=utf-8;base64,' + str(chrony_b64),
+                'source': 'data:text/plain;charset=utf-8;base64,' + chrony_b64,
                 'verification': {}
                 },
             'filesystem': 'root'
