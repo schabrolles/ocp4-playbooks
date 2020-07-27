@@ -31,6 +31,23 @@ files.append(
     'filesystem': 'root'
 })
 
+if os.path.isfile('/tmp/chrony.conf.tmp'):
+    with open("/tmp/chrony.conf.tmp", "rb") as chronyconf:
+        chrony_b64 = base64.standard_b64encode(chronyconf.read())
+        files.append(
+        {
+            'path': '/etc/chrony.conf',
+            'user': {
+                'name': 'root'
+            },
+            'mode': 420,
+            'contents': {
+                'source': 'data:text/plain;charset=utf-8;base64,' + str(chrony_b64),
+                'verification': {}
+                },
+            'filesystem': 'root'
+        })
+
 ignition['storage']['files'] = files;
 
 with open('bootstrap.ign', 'w') as f:
