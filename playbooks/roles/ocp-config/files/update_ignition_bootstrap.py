@@ -31,7 +31,7 @@ files.append(
     'filesystem': 'root'
 })
 
-if os.path.isfile('/tmp/chrony.conf.tmpo'):
+if os.path.isfile('/tmp/chrony.conf.tmp'):
     with open("/tmp/chrony.conf.tmp", "rb") as chronyconf:
         chrony_b64 = base64.standard_b64encode(chronyconf.read())
         files.append(
