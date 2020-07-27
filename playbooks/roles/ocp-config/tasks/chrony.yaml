@@ -13,5 +13,6 @@
     src: chrony-machineconfig.j2
     dest: "{{ workdir }}/manifests/99-{{item}}-chrony-configuration.yaml"
   loop: 
+    - bootstrap
     - master
     - worker
