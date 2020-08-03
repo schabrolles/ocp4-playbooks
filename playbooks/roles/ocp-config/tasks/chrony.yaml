@@ -1,3 +1,37 @@
+- name: Install chrony on bastion
+  yum:
+    name: chrony
+    state: present
+
+- name: Open NTP port on firewall
+  firewalld:
+      service: ntp
+      permanent: yes
+      immediate: yes
+      state: enabled
+
+- name: Allow local stratum in chrony.conf on bastion
+  lineinfile:
+    path: /etc/chrony.conf
+    regexp: '^local stratum'
+    state: present
+    line: "local stratum 10"
+    insertafter: '^#local stratum'
+    backup: yes
+  notify:
+    - restart chrony
+
+- name: Allow Cluster Network in chrony.conf on bastion
+  lineinfile:
+    path: /etc/chrony.conf
+    regexp: '^allow'
+    state: present
+    line: "allow {{ (ansible_default_ipv4.network + '/' + ansible_default_ipv4.netmask) | ipv4('network/prefix') }}"
+    insertafter: '^#allow'
+    backup: yes
+  notify:
+    - restart chrony
+
 - name: Create temporary chrony.conf file
   template:
     src: chrony.conf.j2

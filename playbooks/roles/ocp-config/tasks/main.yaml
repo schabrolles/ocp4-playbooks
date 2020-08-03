@@ -1,15 +1,17 @@
 ---
 # tasks file for ocp4 config
 
+- name: Install netaddr python module
+  pip:
+    name: netaddr
+
 - name: Setup Squid proxy server
   import_tasks: squid.yaml
   when: setup_squid_proxy
 
-
 - name: Extract OCP4 tools
   import_tasks: extract.yaml
   when: release_image_override != ""
-
 
 - name: Skip config if install workdir exist
   stat:
@@ -27,7 +29,6 @@
   with_items:
 #  - absent
   - directory
-
 
 - name: Generate install-config.yaml
   template:

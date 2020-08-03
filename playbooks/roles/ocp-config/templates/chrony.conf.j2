@@ -1,6 +1,9 @@
+{% if chronyconfig.content is defined %}
 {% for item in chronyconfig.content %}
 server {{ item.server }} {{ item.options }}
 {% endfor %}
+{% endif %}
+server {{ ansible_default_ipv4.address }} iburst
 driftfile /var/lib/chrony/drift
 makestep 1.0 3
 rtcsync
