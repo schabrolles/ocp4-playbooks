@@ -62,9 +62,23 @@
     line: '\1mastersSchedulable: False'
     backrefs: yes
 
-- name: Create Chrony machineconfig files for coreOS
+- name: Setup time synchronisation with Chrony
   import_tasks: chrony.yaml
   when: chronyconfig.enabled
+
+- name: Stat ../../ocp4-helpernode/machineconfig/
+  stat:
+    path: "../../ocp4-helpernode/machineconfig/"
+  register: helpernode_mc
+
+- name: Copy machineconfig files generated from helpernode
+  copy:
+    src: "../../ocp4-helpernode/machineconfig/"
+    dest: "{{ workdir }}/manifests" 
+    remote_src: yes
+  when: 
+    - helpernode_mc.stat.isdir is defined
+    - helpernode_mc.stat.isdir
 
 - name: Create ignition files
   shell: "OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE={{ release_image_override }} openshift-install create ignition-configs --log-level {{ log_level }}"
