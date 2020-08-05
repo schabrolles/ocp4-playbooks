@@ -40,9 +40,14 @@
     path: /etc/chrony.conf
     regexp: '^allow'
     state: present
-    line: "allow {{ (ansible_default_ipv4.network + '/' + ansible_default_ipv4.netmask) | ipv4('network/prefix') }}"
+    line: "allow {{ (item.network + '/' + item.netmask) | ipv4('network/prefix') }}"
     insertafter: '^#allow'
     backup: yes
+  loop: "{{ chronyconfig.allow }}"
+  when:
+    - chronyconfig.allow is defined
+    - chronyconfig.allow[0].network is defined
+    - chronyconfig.allow[0].netmask is defined
   notify:
     - restart chrony
 
