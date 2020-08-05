@@ -46,8 +46,7 @@
   loop: "{{ chronyconfig.allow }}"
   when:
     - chronyconfig.allow is defined
-    - chronyconfig.allow[0].network is defined
-    - chronyconfig.allow[0].netmask is defined
+    - chronyconfig.allow[0] is defined
   notify:
     - restart chrony
 
