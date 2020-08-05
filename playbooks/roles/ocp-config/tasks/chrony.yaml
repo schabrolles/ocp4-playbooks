@@ -13,9 +13,9 @@
 - name: Configure chrony to synchronize with ntp servers
   lineinfile:
     path: /etc/chrony.conf
-    regexp: '^server {{ $item.server }} '
+    regexp: '^server {{ item.server }} '
     state: present
-    line: "server {{ $item.server }} {{ $item.options }}"
+    line: "server {{ item.server }} {{ item.options }}"
     insertafter: 'server'
     backup: yes
   loop: "{{ chronyconfig.content }}"
