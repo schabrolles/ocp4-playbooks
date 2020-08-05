@@ -40,7 +40,8 @@
     path: /etc/chrony.conf
     regexp: '^allow'
     state: present
-    line: "allow {{ (item.network + '/' + item.netmask) | ipv4('network/prefix') }}"
+    #line: "allow {{ (item.network + '/' + item.netmask) | ipv4('network/prefix') }}"
+    line: "allow {{ item }}"
     insertafter: '^#allow'
     backup: yes
   loop: "{{ chronyconfig.allow }}"
