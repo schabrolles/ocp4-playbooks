@@ -15,12 +15,13 @@
     path: /etc/chrony.conf
     regexp: '^server {{ item.server }} '
     state: present
-    line: "server {{ item.server }} {{ item.options }}"
+    line: "server {{ item.server }} {{ item.options | default('iburst') }}"
     insertafter: 'server '
     backup: yes
   loop: "{{ chronyconfig.content }}"
   when:
     - chronyconfig.content is defined
+    - chronyconfig.content[O].server is defined
   notify:
     - restart chrony
 
