@@ -77,3 +77,10 @@ proxy:
   httpsProxy: {{ squid_proxy_url | default(proxy_url) }}
   noProxy: .{{ install_config.cluster_id }}.{{ install_config.cluster_domain }},{{ no_proxy }}
 {% endif %}
+imageContentSources:
+- mirrors:
+  - registry:5000/ocp/openshift4
+  source: quay.io/openshift-release-dev/ocp-release
+- mirrors:
+  - registry:5000/ocp/openshift4
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
