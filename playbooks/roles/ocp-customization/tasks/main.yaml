@@ -7,10 +7,22 @@
       - python3-devel
     state: present
 
+# - name: Install openshift python module
+#   pip:
+#     executable: pip3
+#     name: openshift
+
+# MOP Dirty Hack for local install
+- name: Send python-openshift archive for disconnected install
+  unarchive:
+    src: python-openshift.tar.gz
+    dest: /tmp
+
 - name: Install openshift python module
   pip:
     executable: pip3
     name: openshift
+    extra_args: "--no-index --find-links=file:///tmp/python-openshift"
 
 - name:
   block:
