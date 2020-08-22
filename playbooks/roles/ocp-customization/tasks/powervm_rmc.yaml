@@ -45,7 +45,7 @@
             hostNetwork: true
             containers:
               - name: powervm-rmc
-                image: 'quay.io/powercloud/rsct-ppc64le:latest'
+                image: '{{ powervm_rmc_image | default("quay.io/powercloud/rsct-ppc64le:latest") }}'
                 ports:
                   - name: rmc-tcp
                     hostPort: 657
