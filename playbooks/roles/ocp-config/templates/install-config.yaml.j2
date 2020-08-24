@@ -23,40 +23,6 @@ networking:
 platform:
   none: {}
 sshKey: '{{ install_config.public_ssh_key }}'
-additionalTrustBundle: |
-  -----BEGIN CERTIFICATE-----
-  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
-  4HH9FD5KHcvNQpTAsQ==
-  -----END CERTIFICATE-----
 {% if enable_local_registry %}
 pullSecret: '{{ lookup('file', '~/.openshift/pull-secret-updated') }}'
 additionalTrustBundle: |
@@ -77,10 +43,14 @@ proxy:
   httpsProxy: {{ squid_proxy_url | default(proxy_url) }}
   noProxy: .{{ install_config.cluster_id }}.{{ install_config.cluster_domain }},{{ no_proxy }}
 {% endif %}
+{% if disconnected_install_registry is defined and disconnected_install_registry != "" %}
+additionalTrustBundle: |
+{{ lookup('file', '~/.openshift/disconnected_install_registry.crt') | indent(2, first=True) }}
 imageContentSources:
 - mirrors:
-  - myregistry:5000/ocp/openshift4
+  - {{ disconnected_install_registry }}
   source: quay.io/openshift-release-dev/ocp-release
 - mirrors:
-  - myregistry:5000/ocp/openshift4
+  - {{ disconnected_install_registry }}
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+{% endif %}

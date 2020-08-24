@@ -28,6 +28,8 @@ Role Variables
 | chronyconfig.enabled    | no       | true           | Set to true to enable chrony configuration on the bastion node during installation. This also configure the bastion as a NTP server for the cluster. |
 | chronyconfig.content    | no       | ""             | List of time NTP servers and options pair (see chronyconfig examples). If empty, bastion will try sync with some default ntp server (internet) AND local HW clock (with higher stratum). |
 | chronyconfig.allow      | no       | ""             | List of network cidr (X.X.X.X/Y) allowed to sync with bastion configured as NTP server |
+| disconnected_install_registry | no | ""             | internal registry where ocp released has been mirrored |
+| disconnected_install_registry_cert | no | ""        | path of the certificate to be used to connect to disconnected_install_registry |
 
 *chronyconfig variable example *
 

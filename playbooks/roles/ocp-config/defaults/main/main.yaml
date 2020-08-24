@@ -10,3 +10,6 @@ enable_local_registry: false
 
 chronyconfig:
    enabled: true
+
+disconnected_install_registry: ""
+disconnected_install_registry_cert: ""
